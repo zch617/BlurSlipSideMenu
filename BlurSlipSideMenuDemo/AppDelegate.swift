@@ -13,9 +13,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        application.statusBarStyle = UIStatusBarStyle.LightContent
+        self.window = UIWindow(frame:UIScreen.mainScreen().bounds)
+        
+        let controller = ZCHBlurMainController()
+        let mainController = MainViewController()
+        let nav = UINavigationController(rootViewController: mainController)
+        controller.contentController = nav
+        controller.menuController = SlidsidTableViewController()
+        self.window?.rootViewController = controller
+        
+        self.window!.makeKeyAndVisible()
         return true
     }
 
