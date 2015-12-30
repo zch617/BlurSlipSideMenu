@@ -15,6 +15,8 @@ enum ZCHBlurEffectStyle : Int {
     case Dark
 }
 
+private let contentBgViewAlphaMax:CGFloat = 0.8
+
 extension UIViewController {
     
     //MARK: - init
@@ -178,7 +180,7 @@ extension UIViewController {
             
             self.view.layoutIfNeeded()
             self.menuView?.frame = CGRectOffset(AssociatedKeys.originFrame, self.maxOffset(), 0)
-            AssociatedKeys.contentBackgroudView.alpha = 0.8
+            AssociatedKeys.contentBackgroudView.alpha = contentBgViewAlphaMax
             
             }) { (finished) -> Void in
                 
@@ -293,7 +295,7 @@ extension UIViewController {
     
     private func alphaWithOffset(offset:CGFloat) -> CGFloat
     {
-        return max(min(1.0, offset/maxOffset()), 0.0)
+        return max(min(contentBgViewAlphaMax, offset/maxOffset()), 0.0)
     }
     
     private func setupcontentBackgroudView() -> UIView
