@@ -18,6 +18,7 @@
 		98BFED3B1C0F07E300D1D83B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED3A1C0F07E300D1D83B /* RootViewController.swift */; };
 		98BFED3D1C0F081100D1D83B /* SlidsidTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED3C1C0F081100D1D83B /* SlidsidTableViewController.swift */; };
 		98BFED3F1C0FDEE900D1D83B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED3E1C0FDEE900D1D83B /* MainViewController.swift */; };
+		98E8E7841C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8E7831C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		98BFED3A1C0F07E300D1D83B /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		98BFED3C1C0F081100D1D83B /* SlidsidTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlidsidTableViewController.swift; sourceTree = "<group>"; };
 		98BFED3E1C0FDEE900D1D83B /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		98E8E7831C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ZCHBlurSlipSideMenu+UIViewController.swift"; path = "BlurSlipSideMenu/ZCHBlurSlipSideMenu+UIViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				98BFED2B1C0DAE0100D1D83B /* ZCHBlurMainController.swift */,
+				98E8E7831C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift */,
 			);
 			name = BlurSlipSideMenu;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98BFED3F1C0FDEE900D1D83B /* MainViewController.swift in Sources */,
+				98E8E7841C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift in Sources */,
 				98BFED3B1C0F07E300D1D83B /* RootViewController.swift in Sources */,
 				98BFED361C0EF4BE00D1D83B /* UIImage+ImageEffects.m in Sources */,
 				98BFED3D1C0F081100D1D83B /* SlidsidTableViewController.swift in Sources */,

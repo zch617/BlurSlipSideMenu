@@ -18,11 +18,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.statusBarStyle = UIStatusBarStyle.LightContent
         self.window = UIWindow(frame:UIScreen.mainScreen().bounds)
         
-        let controller = ZCHBlurMainController()
-        let mainController = MainViewController()
-        let nav = UINavigationController(rootViewController: mainController)
-        controller.contentController = nav
+        //方式1
+//        let controller = ZCHBlurMainController()
+//        let mainController = MainViewController()
+//        let nav = UINavigationController(rootViewController: mainController)
+//        controller.contentController = nav
+//        controller.menuController = SlidsidTableViewController()
+        
+        //方式2
+        let controller = RootViewController()
         controller.menuController = SlidsidTableViewController()
+        let nav = UINavigationController(rootViewController: MainViewController())
+        controller.contentController = nav
+//        controller.sideControllerWidthScale = 0.5
+        
+        
         self.window?.rootViewController = controller
         
         self.window!.makeKeyAndVisible()
