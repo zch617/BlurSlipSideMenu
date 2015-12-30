@@ -12,10 +12,6 @@ class RootViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let imageView = UIImageView(frame: self.view.frame)
-//        imageView.image = UIImage(named: "IMG_0502.jpg")
-//        self.view.addSubview(imageView)
         
         self.setupChildrenViewController()
     }

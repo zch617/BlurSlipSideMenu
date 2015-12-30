@@ -30,13 +30,13 @@ class MainViewController: UIViewController {
         blurMainController?.showMenu()
     }
 
-    func blurMainController() -> ZCHBlurMainController?
+    func blurMainController() -> RootViewController?
     {
         var controller = self.parentViewController
         while (controller != nil) {
-            if controller!.isKindOfClass(ZCHBlurMainController.classForCoder())
+            if controller!.isKindOfClass(RootViewController.classForCoder())
             {
-                return controller as? ZCHBlurMainController
+                return controller as? RootViewController
             }
             else if controller?.parentViewController != nil && controller?.parentViewController != controller
             {

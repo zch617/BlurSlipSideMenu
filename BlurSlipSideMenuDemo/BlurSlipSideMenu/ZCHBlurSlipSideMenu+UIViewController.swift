@@ -8,14 +8,14 @@
 
 import UIKit
 
-//enum ZCHBlurEffectStyle : Int {
-//    
-//    case ExtraLight
-//    case Light
-//    case Dark
-//}
+enum ZCHBlurEffectStyle : Int {
+    
+    case ExtraLight
+    case Light
+    case Dark
+}
 
-extension RootViewController {
+extension UIViewController {
     
     //MARK: - init
 
@@ -26,7 +26,7 @@ extension RootViewController {
     
     convenience init(menuController:UIViewController, contentController:UIViewController?)
     {
-        self.init(menuController: menuController, contentController: nil, blurredType: .Light, sideControllerWidthScale: 0.8)
+        self.init(menuController: menuController, contentController: contentController, blurredType: .Light, sideControllerWidthScale: 0.8)
     }
     
     convenience init(menuController:UIViewController, contentController:UIViewController?, blurredType:ZCHBlurEffectStyle, sideControllerWidthScale:CGFloat)
@@ -35,7 +35,7 @@ extension RootViewController {
         
         self.menuController = menuController
         self.contentController = contentController
-        AssociatedKeys.blurredType = blurredType
+        self.blurredType = blurredType
         self.sideControllerWidthScale = sideControllerWidthScale
     }
     
@@ -45,8 +45,8 @@ extension RootViewController {
         
         self.menuController = menuController
         self.contentController = contentController
-        AssociatedKeys.blurredType = blurredType
-        AssociatedKeys.sideControllerWidth = sideControllerWidth
+        self.blurredType = blurredType
+        self.sideControllerWidth = sideControllerWidth
         self.sideControllerWidthScale = 0
     }
     
@@ -57,14 +57,13 @@ extension RootViewController {
         static var MenuControllerKey = "zch_MenuControllerKey"
         static var ContentControllerKey = "zch_ContentControllerKey"
         static var SideControllerWidthScaleKey = "zch_SideControllerWidthScaleKey"
+        static var SideControllerWidthKey = "zch_SideControllerWidthKey"
+        static var BlurredTypeKey = "zch_BlurredTypeKey"
         
         static var isShowing = false
         static var contentBtn = UIButton(frame: CGRectNull)
         static var contentBackgroudView = UIView(frame: CGRectNull)
         static var originFrame = CGRectNull
-        
-        static var blurredType:ZCHBlurEffectStyle = .Light
-        static var sideControllerWidth:CGFloat = 0
     }
     
     //MARK: - public property
@@ -105,22 +104,29 @@ extension RootViewController {
         }
     }
     
-    //MARK: - private perporty
+    /// 侧滑栏宽度 （sideControllerWidth 和 sideControllerWidthScale 使用其中一个，默认用sideControllerWidthScale）
+    var sideControllerWidth: CGFloat? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.SideControllerWidthKey) as? CGFloat
+        }
+        
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.SideControllerWidthKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
     
     /// 侧滑滑出时的背景模糊风格
-    private var blurredType:ZCHBlurEffectStyle? {
-        return AssociatedKeys.blurredType
+    var blurredType:ZCHBlurEffectStyle {
+        get {
+            return ZCHBlurEffectStyle(rawValue: (objc_getAssociatedObject(self, &AssociatedKeys.BlurredTypeKey) as? Int) ?? 1)!
+        }
+        
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.BlurredTypeKey, newValue.rawValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
     }
     
-    /// 侧滑栏宽度 （sideControllerWidth 和 sideControllerWidthScale 使用其中一个，默认用sideControllerWidthScale）
-    private var sideControllerWidth: CGFloat? {
-        return AssociatedKeys.sideControllerWidth
-    }
-    
-    private func originFrame() -> CGRect
-    {
-        return CGRectMake(-CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, 0, CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, CGRectGetHeight(self.view.frame))
-    }
+    //MARK: - private perporty
     
     private var menuView: UIView? {
         return self.menuController?.view
@@ -224,7 +230,9 @@ extension RootViewController {
         if AssociatedKeys.contentBackgroudView.superview == nil
         {
             self.contentView.addSubview(AssociatedKeys.contentBackgroudView)
-            self.contentView.bringSubviewToFront(self.menuView!)
+            if self.menuView != nil {
+                self.contentView.bringSubviewToFront(self.menuView!)
+            }
         }
     }
     
@@ -273,6 +281,11 @@ extension RootViewController {
     
     //MARK: private method
     
+    private func originFrame() -> CGRect
+    {
+        return CGRectMake(-CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, 0, CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, CGRectGetHeight(self.view.frame))
+    }
+    
     private func maxOffset() -> CGFloat
     {
         return CGRectGetWidth(self.menuView!.frame)
@@ -290,7 +303,7 @@ extension RootViewController {
         if #available(iOS 8.0, *) {
             
             var type:UIBlurEffectStyle
-            switch self.blurredType!
+            switch self.blurredType
             {
             case .Dark:
                 type = .Dark
@@ -308,7 +321,7 @@ extension RootViewController {
             view.frame = self.contentView.bounds
         } else {
             view = UIImageView(frame: self.contentView.bounds)
-            let image = self.blurredSnapshot(self.contentView.bounds, blurredType: self.blurredType!)
+            let image = self.blurredSnapshot(self.contentView.bounds, blurredType: self.blurredType)
             (view as! UIImageView).image = image
         }
         
@@ -318,12 +331,12 @@ extension RootViewController {
     
     private func setupSideControllerWidthScale()
     {
-        if self.sideControllerWidth > 0
+        if self.sideControllerWidth > 0 && self.sideControllerWidth < self.contentView.frame.width
         {
             self.sideControllerWidthScale = self.sideControllerWidth! / CGRectGetWidth(self.view.frame)
         }
         else {
-            if self.sideControllerWidthScale == nil
+            if self.sideControllerWidthScale == nil || self.sideControllerWidthScale >= 1
             {
                 self.sideControllerWidthScale = 0.8
             }

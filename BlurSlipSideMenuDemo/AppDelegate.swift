@@ -18,23 +18,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.statusBarStyle = UIStatusBarStyle.LightContent
         self.window = UIWindow(frame:UIScreen.mainScreen().bounds)
         
+        let sideMenuController = SlidsidTableViewController()
+        let nav = UINavigationController(rootViewController: MainViewController())
+        
+        /******RootViewController中有两个子控制器，一个展示主界面，一个展示侧边栏********/
         //方式1
-//        let controller = ZCHBlurMainController()
-//        let mainController = MainViewController()
-//        let nav = UINavigationController(rootViewController: mainController)
+        let controller = RootViewController()
+        controller.menuController = sideMenuController
+        controller.contentController = nav
+        controller.sideControllerWidthScale = 0.5
+//        controller.blurredType = .Dark
+        //方式2
+//        let controller = RootViewController(menuController: sideMenuController, contentController: nav, blurredType: .Dark, sideControllerWidthScale: 0.4)
+        
+        //方式3
+//        let controller = RootViewController(menuController: sideMenuController, contentController: nav, blurredType: .Light, sideControllerWidth: 180)
+        
+        //方式4
+//        let controller = RootViewController(menuController: sideMenuController, contentController: nav)
+        
+        //方式5
+//        let controller = RootViewController(menuController: sideMenuController)
 //        controller.contentController = nav
-//        controller.menuController = SlidsidTableViewController()
+//        controller.sideControllerWidth = 200
+        
+        
+        /******ViewController中只有一个子控制器，用于展示侧边栏，自身带有的view展示主界面********/
+        //方式1
+//        let controller = ViewController()
+//        controller.menuController = sideMenuController
+//        controller.sideControllerWidthScale = 0.5
+//        controller.blurredType = .Light
         
         //方式2
-        let controller = RootViewController()
-        controller.menuController = SlidsidTableViewController()
-        let nav = UINavigationController(rootViewController: MainViewController())
-        controller.contentController = nav
-//        controller.sideControllerWidthScale = 0.5
+//        let controller = ViewController(menuController: sideMenuController, contentController: nil, blurredType: .Dark, sideControllerWidth: 240)
         
+        //方式3
+//        let controller = ViewController(menuController: sideMenuController, contentController: nil, blurredType: .ExtraLight, sideControllerWidthScale: 0.7)
+        
+        //方式4
+//        let controller = ViewController(menuController: sideMenuController)
+        
+        //方式5
+//        let controller = ViewController(menuController: sideMenuController, contentController: nil)
+//        controller.sideControllerWidth = 200
         
         self.window?.rootViewController = controller
-        
         self.window!.makeKeyAndVisible()
         return true
     }

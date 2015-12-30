@@ -13,7 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        self.setupChildrenViewController()
+        let imageView = UIImageView(frame: self.view.frame)
+        imageView.image = UIImage(named: "IMG_0502.jpg")
+        self.view.addSubview(imageView)
+
+        self.setupChildrenViewController()
     }
 
     override func didReceiveMemoryWarning() {

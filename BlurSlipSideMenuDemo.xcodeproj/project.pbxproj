@@ -13,7 +13,6 @@
 		98BFED121C0DAD8400D1D83B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98BFED111C0DAD8400D1D83B /* Images.xcassets */; };
 		98BFED151C0DAD8400D1D83B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98BFED131C0DAD8400D1D83B /* LaunchScreen.xib */; };
 		98BFED211C0DAD8400D1D83B /* BlurSlipSideMenuDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED201C0DAD8400D1D83B /* BlurSlipSideMenuDemoTests.swift */; };
-		98BFED2C1C0DAE0100D1D83B /* ZCHBlurMainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED2B1C0DAE0100D1D83B /* ZCHBlurMainController.swift */; };
 		98BFED361C0EF4BE00D1D83B /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED351C0EF4BE00D1D83B /* UIImage+ImageEffects.m */; };
 		98BFED3B1C0F07E300D1D83B /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED3A1C0F07E300D1D83B /* RootViewController.swift */; };
 		98BFED3D1C0F081100D1D83B /* SlidsidTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFED3C1C0F081100D1D83B /* SlidsidTableViewController.swift */; };
@@ -42,7 +41,6 @@
 		98BFED1A1C0DAD8400D1D83B /* BlurSlipSideMenuDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlurSlipSideMenuDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98BFED1F1C0DAD8400D1D83B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		98BFED201C0DAD8400D1D83B /* BlurSlipSideMenuDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurSlipSideMenuDemoTests.swift; sourceTree = "<group>"; };
-		98BFED2B1C0DAE0100D1D83B /* ZCHBlurMainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ZCHBlurMainController.swift; path = BlurSlipSideMenu/ZCHBlurMainController.swift; sourceTree = "<group>"; };
 		98BFED341C0EF4BE00D1D83B /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		98BFED351C0EF4BE00D1D83B /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		98BFED371C0EF72A00D1D83B /* Swift_to_ObjectCBridge_Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Swift_to_ObjectCBridge_Header.h; sourceTree = "<group>"; };
@@ -136,7 +134,6 @@
 		98BFED2A1C0DADA200D1D83B /* BlurSlipSideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				98BFED2B1C0DAE0100D1D83B /* ZCHBlurMainController.swift */,
 				98E8E7831C2506EE00B13D3C /* ZCHBlurSlipSideMenu+UIViewController.swift */,
 			);
 			name = BlurSlipSideMenu;
@@ -251,7 +248,6 @@
 				98BFED3D1C0F081100D1D83B /* SlidsidTableViewController.swift in Sources */,
 				98BFED0D1C0DAD8400D1D83B /* ViewController.swift in Sources */,
 				98BFED0B1C0DAD8400D1D83B /* AppDelegate.swift in Sources */,
-				98BFED2C1C0DAE0100D1D83B /* ZCHBlurMainController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
