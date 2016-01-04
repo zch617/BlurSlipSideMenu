@@ -26,8 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let controller = RootViewController()
         controller.menuController = sideMenuController
         controller.contentController = nav
-        controller.sideControllerWidthScale = 0.5
-//        controller.blurredType = .Dark
+        controller.sideControllerWidthScale = 0.8
+        controller.blurredType = .Light
+        controller.slipDirection = .Right
         //方式2
 //        let controller = RootViewController(menuController: sideMenuController, contentController: nav, blurredType: .Dark, sideControllerWidthScale: 0.4)
         

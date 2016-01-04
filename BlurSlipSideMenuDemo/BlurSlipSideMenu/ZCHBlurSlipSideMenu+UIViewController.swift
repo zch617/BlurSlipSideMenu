@@ -8,14 +8,17 @@
 
 import UIKit
 
-enum ZCHBlurEffectStyle : Int {
+enum ZCHBlurEffectStyle: Int {
     
     case ExtraLight
     case Light
     case Dark
 }
 
-private let contentBgViewAlphaMax:CGFloat = 0.8
+enum ZCHSlipDirection: Int {
+    case Left
+    case Right
+}
 
 extension UIViewController {
     
@@ -61,11 +64,14 @@ extension UIViewController {
         static var SideControllerWidthScaleKey = "zch_SideControllerWidthScaleKey"
         static var SideControllerWidthKey = "zch_SideControllerWidthKey"
         static var BlurredTypeKey = "zch_BlurredTypeKey"
+        static var SlipDirectionKey = "zch_SlipDirectionKey"
         
         static var isShowing = false
         static var contentBtn = UIButton(frame: CGRectNull)
         static var contentBackgroudView = UIView(frame: CGRectNull)
         static var originFrame = CGRectNull
+        
+        static let contentBgViewAlphaMax:CGFloat = 0.8
     }
     
     //MARK: - public property
@@ -128,6 +134,16 @@ extension UIViewController {
         }
     }
     
+    var slipDirection:ZCHSlipDirection {
+        get {
+            return ZCHSlipDirection(rawValue: (objc_getAssociatedObject(self, &AssociatedKeys.SlipDirectionKey) as? Int) ?? 0)!
+        }
+        
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.SlipDirectionKey, newValue.rawValue, objc_AssociationPolicy.OBJC_ASSOCIATION_ASSIGN)
+        }
+    }
+    
     //MARK: - private perporty
     
     private var menuView: UIView? {
@@ -159,7 +175,7 @@ extension UIViewController {
         self.view.addSubview(self.menuView!)
         
         let gestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: "pantoShowOrHidden:")
-        gestureRecognizer.edges = UIRectEdge.Left
+        gestureRecognizer.edges = self.slipDirection == .Left ? .Left : .Right
         self.view.addGestureRecognizer(gestureRecognizer)
         
         AssociatedKeys.contentBtn.addTarget(self, action: "clickToHiddenMenu", forControlEvents: UIControlEvents.TouchUpInside)
@@ -180,7 +196,7 @@ extension UIViewController {
             
             self.view.layoutIfNeeded()
             self.menuView?.frame = CGRectOffset(AssociatedKeys.originFrame, self.maxOffset(), 0)
-            AssociatedKeys.contentBackgroudView.alpha = contentBgViewAlphaMax
+            AssociatedKeys.contentBackgroudView.alpha = AssociatedKeys.contentBgViewAlphaMax
             
             }) { (finished) -> Void in
                 
@@ -256,13 +272,14 @@ extension UIViewController {
             
         case .Changed:
             let translation = pan.translationInView(self.view)
-            self.menuView?.frame = CGRectOffset(AssociatedKeys.originFrame, min(translation.x, maxOffset()), 0)
-            AssociatedKeys.contentBackgroudView.alpha = alphaWithOffset(min(translation.x, maxOffset()))
+            let offsetX = self.slipDirection == .Left ? min(translation.x, maxOffset()) : max(translation.x, maxOffset())
+            self.menuView?.frame = CGRectOffset(AssociatedKeys.originFrame, offsetX, 0)
+            AssociatedKeys.contentBackgroudView.alpha = alphaWithOffset(offsetX)
             break
             
         case .Ended:
             let velocity = pan.velocityInView(self.view)
-            if velocity.x > 0
+            if (velocity.x > 0 && self.slipDirection == .Left) || (velocity.x < 0 && self.slipDirection == .Right)
             {
                 self.showMenu()
             }
@@ -285,17 +302,26 @@ extension UIViewController {
     
     private func originFrame() -> CGRect
     {
-        return CGRectMake(-CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, 0, CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, CGRectGetHeight(self.view.frame))
+        var x:CGFloat = 0
+        if self.slipDirection == .Left {
+            x = -CGRectGetWidth(self.view.frame) * sideControllerWidthScale!
+        }
+        else {
+            x = CGRectGetWidth(self.view.frame)
+        }
+        
+        return CGRectMake(x, 0, CGRectGetWidth(self.view.frame) * sideControllerWidthScale!, CGRectGetHeight(self.view.frame))
     }
     
     private func maxOffset() -> CGFloat
     {
-        return CGRectGetWidth(self.menuView!.frame)
+        let s:CGFloat = self.slipDirection == .Left ? 1 : -1
+        return CGRectGetWidth(self.menuView!.frame) * s
     }
     
     private func alphaWithOffset(offset:CGFloat) -> CGFloat
     {
-        return max(min(contentBgViewAlphaMax, offset/maxOffset()), 0.0)
+        return max(min(AssociatedKeys.contentBgViewAlphaMax, abs(offset/maxOffset())), 0.0)
     }
     
     private func setupcontentBackgroudView() -> UIView
